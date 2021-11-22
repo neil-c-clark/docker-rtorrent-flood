@@ -23,6 +23,11 @@ spec:
       containers:
       - name: rtorrent
         image: quay.io/neilclark/rtorrent:1.0.0
+        env:
+        - name: PUID
+          value: "568"
+        - name: PUID
+          value: "568"
         resources:
           requests:
             cpu: 50m
@@ -61,6 +66,10 @@ spec:
           failureThreshold: 3
           periodSeconds: 60
           timeoutSeconds: 10
+        securityContext:
+          runAsGroup: 568
+          runAsNonRoot: true
+          runAsUser: 568
       volumes:
       - name: data
         persistentVolumeClaim:
