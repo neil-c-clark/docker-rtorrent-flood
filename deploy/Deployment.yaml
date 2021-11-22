@@ -22,7 +22,7 @@ spec:
       hostname: rtorrent
       containers:
       - name: rtorrent
-        image: quay.io/neilclark/rtorrent:1.0.0
+        image: quay.io/neilclark/rtorrent:1.0.1
         env:
         - name: PUID
           value: "568"
