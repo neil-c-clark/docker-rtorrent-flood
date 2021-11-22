@@ -1,0 +1,24 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rtorrent
+  labels:
+    app.kubernetes.io/instance: rtorrent
+    app.kubernetes.io/name: rtorrent
+spec:
+  ports:
+  - name: web
+    port: 3000
+    targetPort: web
+    protocol: TCP
+  - name: data-tcp
+    port: 49184
+    targetPort: data-tcp
+    protocol: TCP
+  - name: data-udp
+    port: 49184
+    targetPort: data-udp
+    protocol: UDP
+  selector:
+    app.kubernetes.io/instance: rtorrent
+    app.kubernetes.io/name: rtorrent

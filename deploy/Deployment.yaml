@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtorrent
+  labels:
+    app.kubernetes.io/instance: rtorrent
+    app.kubernetes.io/name: rtorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: rtorrent
+      app.kubernetes.io/name: rtorrent
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: rtorrent
+        app.kubernetes.io/name: rtorrent
+    spec:
+      hostname: rtorrent
+      containers:
+      - name: rtorrent
+        image: quay.io/neilclark/rtorrent:1.0.0
+        resources:
+          requests:
+            cpu: 50m
+            memory: 300Mi
+          limits:
+            cpu: 400m
+            memory: 500Mi
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+        ports:
+        - containerPort: 3000
+          name: web
+          protocol: TCP
+        - containerPort: 49184
+          name: data-tcp
+          protocol: TCP
+        - containerPort: 49184
+          name: data-udp
+          protocol: UDP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: web
+          initialDelaySeconds: 60
+          failureThreshold: 3
+          periodSeconds: 60
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: web
+          initialDelaySeconds: 60
+          failureThreshold: 3
+          periodSeconds: 60
+          timeoutSeconds: 10
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: plex-media
+      - name: config
+        persistentVolumeClaim:
+          claimName: rtorrent-config

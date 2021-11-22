@@ -1,0 +1,59 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: rtorrent-https
+  namespace: media
+  labels:
+    app.kubernetes.io/instance: rtorrent
+    app.kubernetes.io/name: rtorrent
+    traefik-instance.traefik/traefik: enabled
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`rtorrent.neilclark.co.uk`)
+    kind: Rule
+    services:
+    - name: rtorrent
+      port: 3000
+  tls:
+    certResolver: letsencrypt
+    domains:
+    - main: '*.neilclark.co.uk'
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: rtorrent-data-tcp
+  namespace: media
+  labels:
+    app.kubernetes.io/instance: rtorrent
+    app.kubernetes.io/name: rtorrent
+    traefik-instance.traefik/traefik: enabled
+spec:
+  entryPoints:
+    - rtorrent-tcp
+  routes:
+  - match: HostSNI(`*`)
+    services:
+    - name: rtorrent
+      port: 49184
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: rtorrent-data-tcp
+  namespace: media
+  labels:
+    app.kubernetes.io/instance: rtorrent
+    app.kubernetes.io/name: rtorrent
+    traefik-instance.traefik/traefik: enabled
+spec:
+  entryPoints:
+    - rtorrent-udp
+  routes:
+  - services:
+    - name: rtorrent
+      port: 49184

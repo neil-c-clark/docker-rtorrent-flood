@@ -1,0 +1,7 @@
+namespace: media
+
+resources:
+- Deployment.yaml
+- IngressRoutes.yaml
+- PersistentVolumeClaim.yaml
+- Service.yaml
