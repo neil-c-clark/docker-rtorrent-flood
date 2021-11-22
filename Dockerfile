@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.15
 
 ENV PUID="${PUID:-1000}"
 ENV PGID="${PGID:-1000}"
@@ -9,13 +9,13 @@ RUN \
     mediainfo \
     nginx \
     nodejs \
-    nodejs-npm \
+    npm \
     openssl \
     py3-setuptools \
     rtorrent \
     su-exec \
     supervisor \
-    unrar \
+    # unrar \
     xmlrpc-c-dev \
   && rm -rf /var/cache/apk/* /tmp/*
 
