@@ -10,5 +10,5 @@ set -euo pipefail
 [ ! -r /config/.session ] && mkdir -p /config/.session
 [ ! -r /data/.watch ] && mkdir -p /data/.watch
 
-chown -R $PUID:$PGID /config /data/.watch
+# chown -R $PUID:$PGID /config /data/.watch
 exec "${@}"
