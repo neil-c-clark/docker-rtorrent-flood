@@ -66,9 +66,6 @@ spec:
           failureThreshold: 3
           periodSeconds: 60
           timeoutSeconds: 10
-        securityContext:
-          runAsGroup: 568
-          runAsUser: 568
       volumes:
       - name: data
         persistentVolumeClaim:
