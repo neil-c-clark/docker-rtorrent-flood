@@ -1,7 +1,7 @@
 FROM alpine:3.15
 
-ENV PUID="${PUID:-1000}"
-ENV PGID="${PGID:-1000}"
+ENV PUID="${PUID:-568}"
+ENV PGID="${PGID:-568}"
 
 RUN \
   apk add -U --no-cache \
