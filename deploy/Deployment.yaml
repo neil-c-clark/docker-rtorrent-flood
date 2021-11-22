@@ -68,7 +68,6 @@ spec:
           timeoutSeconds: 10
         securityContext:
           runAsGroup: 568
-          runAsNonRoot: true
           runAsUser: 568
       volumes:
       - name: data
